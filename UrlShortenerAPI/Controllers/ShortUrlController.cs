@@ -78,19 +78,16 @@ namespace testAPI.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetShort(string shortUrl)
+        public IActionResult GetShort(string shortUrl)
         {
-            var result = _context.ShortURLs.First(s => s.shortUrl == shortUrl);
+            var result = _context.ShortURLs.FirstOrDefault(s => s.shortUrl == shortUrl);
 
             if (result == null)
             {
-                return new JsonResult(NotFound());
+                return NotFound();
             }
 
-
-            Response.Redirect(result.fullUrl);
-
-            return new JsonResult(Redirect(result.fullUrl));
+            return Redirect(result.fullUrl);
         }
     }
 }
